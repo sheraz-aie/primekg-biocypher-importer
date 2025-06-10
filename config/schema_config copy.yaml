@@ -1,4 +1,4 @@
-# In config/schema_config.yaml (FINAL, Meticulously Checked Version)
+# In config/schema_config.yaml (FINAL, COMPLETE VERSION)
 
 # -----------------
 # --- NODE TYPES ---
@@ -23,15 +23,15 @@ drug:
   is_a: biolink:Drug
   input_label: drug
   properties: {name: str, source: str}
-effect_phenotype:
+'effect/phenotype':
   is_a: biolink:PhenotypicFeature
-  input_label: 'effect/phenotype'
+  input_label: effect/phenotype
   properties: {name: str, source: str}
 exposure:
   is_a: biolink:ChemicalExposure
   input_label: exposure
   properties: {name: str, source: str}
-protein:
+protein: # Covers 'gene/protein'
   is_a: biolink:Protein
   input_label: protein
   properties: {name: str, source: str}
@@ -45,184 +45,154 @@ pathway:
   properties: {name: str, source: str}
 
 # -----------------
-# --- EDGE TYPES (Corrected with 'represented_as: edge') ---
+# --- EDGE TYPES ---
 # -----------------
 anatomy_anatomy:
-  represented_as: edge
   is_a: biolink:part_of
   input_label: anatomy_anatomy
   source: anatomy
   target: anatomy
 anatomy_protein_absent:
-  represented_as: edge
-  is_a: biolink:related_to
+  is_a: biolink:related_to # No direct inverse of expresses
   input_label: anatomy_protein_absent
   source: anatomy
   target: protein
 anatomy_protein_present:
-  represented_as: edge
   is_a: biolink:expresses
   input_label: anatomy_protein_present
   source: anatomy
   target: protein
 bioprocess_bioprocess:
-  represented_as: edge
   is_a: biolink:part_of
   input_label: bioprocess_bioprocess
   source: biological_process
   target: biological_process
 bioprocess_protein:
-  represented_as: edge
   is_a: biolink:actively_involved_in
   input_label: bioprocess_protein
   source: biological_process
   target: protein
 cellcomp_cellcomp:
-  represented_as: edge
   is_a: biolink:part_of
   input_label: cellcomp_cellcomp
   source: cellular_component
   target: cellular_component
 cellcomp_protein:
-  represented_as: edge
   is_a: biolink:part_of
   input_label: cellcomp_protein
   source: cellular_component
   target: protein
 contraindication:
-  represented_as: edge
   is_a: biolink:contraindicated_in
   input_label: contraindication
   source: drug
   target: disease
 disease_disease:
-  represented_as: edge
   is_a: biolink:related_to
   input_label: disease_disease
   source: disease
   target: disease
 disease_phenotype_negative:
-  represented_as: edge
-  is_a: biolink:related_to
+  is_a: biolink:related_to # No direct negative phenotype relation
   input_label: disease_phenotype_negative
   source: disease
-  target: effect_phenotype
+  target: "'effect/phenotype'" # Must be quoted
 disease_phenotype_positive:
-  represented_as: edge
   is_a: biolink:has_phenotype
   input_label: disease_phenotype_positive
   source: disease
-  target: effect_phenotype
+  target: "'effect/phenotype'" # Must be quoted
 disease_protein:
-  represented_as: edge
   is_a: biolink:gene_associated_with_condition
   input_label: disease_protein
   source: disease
   target: protein
 drug_drug:
-  represented_as: edge
   is_a: biolink:interacts_with
   input_label: drug_drug
   source: drug
   target: drug
 drug_effect:
-  represented_as: edge
   is_a: biolink:causes
   input_label: drug_effect
   source: drug
-  target: effect_phenotype
+  target: "'effect/phenotype'" # Must be quoted
 drug_protein:
-  represented_as: edge
   is_a: biolink:interacts_with
   input_label: drug_protein
   source: drug
   target: protein
 exposure_bioprocess:
-  represented_as: edge
   is_a: biolink:affects
   input_label: exposure_bioprocess
   source: exposure
   target: biological_process
 exposure_cellcomp:
-  represented_as: edge
   is_a: biolink:affects
   input_label: exposure_cellcomp
   source: exposure
   target: cellular_component
 exposure_disease:
-  represented_as: edge
   is_a: biolink:contributes_to
   input_label: exposure_disease
   source: exposure
   target: disease
 exposure_exposure:
-  represented_as: edge
   is_a: biolink:related_to
   input_label: exposure_exposure
   source: exposure
   target: exposure
 exposure_molfunc:
-  represented_as: edge
   is_a: biolink:affects
   input_label: exposure_molfunc
   source: exposure
   target: molecular_function
 exposure_protein:
-  represented_as: edge
   is_a: biolink:interacts_with
   input_label: exposure_protein
   source: exposure
   target: protein
 indication:
-  represented_as: edge
   is_a: biolink:treats
   input_label: indication
   source: drug
   target: disease
 molfunc_molfunc:
-  represented_as: edge
   is_a: biolink:related_to
   input_label: molfunc_molfunc
   source: molecular_function
   target: molecular_function
 molfunc_protein:
-  represented_as: edge
   is_a: biolink:enables
   input_label: molfunc_protein
   source: molecular_function
   target: protein
-off_label_use:
-  represented_as: edge
+'off-label use':
   is_a: biolink:treats
-  input_label: 'off-label use'
+  input_label: off-label use
   source: drug
   target: disease
 pathway_pathway:
-  represented_as: edge
   is_a: biolink:part_of
   input_label: pathway_pathway
   source: pathway
   target: pathway
 pathway_protein:
-  represented_as: edge
   is_a: biolink:actively_involved_in
   input_label: pathway_protein
   source: pathway
   target: protein
 phenotype_phenotype:
-  represented_as: edge
   is_a: biolink:related_to
   input_label: phenotype_phenotype
-  source: effect_phenotype
-  target: effect_phenotype
+  source: "'effect/phenotype'" # Must be quoted
+  target: "'effect/phenotype'" # Must be quoted
 phenotype_protein:
-  represented_as: edge
   is_a: biolink:related_to
   input_label: phenotype_protein
-  source: effect_phenotype
+  source: "'effect/phenotype'" # Must be quoted
   target: protein
 protein_protein:
-  represented_as: edge
   is_a: biolink:interacts_with
   input_label: protein_protein
   source: protein
